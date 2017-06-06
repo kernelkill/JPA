@@ -27,5 +27,23 @@ public abstract class GenericDAO <T extends Serializable>{
 		manager.getTransaction().commit();
 		manager.close();
 	}
+	
+	//Criando o metodo update
+	public void update(T entity){
+		EntityManager manager = getEntityManager();
+		manager.getTransaction().begin();
+		manager.merge(entity);
+		manager.getTransaction().commit();
+		manager.close();
+	}
+	
+	//Criando o metodo delete
+	public void delete(Long id){
+		EntityManager manager = getEntityManager();
+		manager.getTransaction().begin();
+		manager.remove(manager.getReference(aClass, id));
+		manager.getTransaction().commit();
+		manager.close();
+	}
 
 }
