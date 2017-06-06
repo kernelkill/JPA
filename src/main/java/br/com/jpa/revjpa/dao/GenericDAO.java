@@ -1,8 +1,10 @@
 package br.com.jpa.revjpa.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.com.jpa.revjpa.util.JPAUtil;
 
@@ -16,6 +18,32 @@ public abstract class GenericDAO <T extends Serializable>{
 	
 	protected EntityManager getEntityManager(){
 		return JPAUtil.getInstance().geEntityManager();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> findAll(){
+		EntityManager manager = getEntityManager();
+		manager.getTransaction().begin();
+		
+		Query query = manager.createQuery("from " + aClass.getSimpleName());
+		List<T> entities = query.getResultList();
+		
+		manager.getTransaction().commit();
+		manager.close();
+		
+		return entities;
+	}
+	
+	public T findById(Long id){
+		EntityManager manager = getEntityManager();
+		manager.getTransaction().begin();
+		
+		T entity = (T) manager.find(aClass, id);
+		
+		manager.getTransaction().commit();
+		manager.close();
+		
+		return entity;
 	}
 	
 	
