@@ -20,6 +20,7 @@ public abstract class GenericDAO <T extends Serializable>{
 		return JPAUtil.getInstance().geEntityManager();
 	}
 	
+	//Metodos de consulta FindAll
 	@SuppressWarnings("unchecked")
 	public List<T> findAll(){
 		EntityManager manager = getEntityManager();
@@ -34,6 +35,7 @@ public abstract class GenericDAO <T extends Serializable>{
 		return entities;
 	}
 	
+	//Metodo de consulta findById
 	public T findById(Long id){
 		EntityManager manager = getEntityManager();
 		manager.getTransaction().begin();
